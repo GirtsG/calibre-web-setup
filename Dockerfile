@@ -15,5 +15,5 @@ conn.close();"
 # Eksportējiet portu
 EXPOSE 8083
 
-# Palaidiet Calibre-Web
-CMD ["/init"]
+# Palaidiet ar pareizo ieejas punktu
+ENTRYPOINT ["/init"]
