@@ -3,7 +3,7 @@ FROM ghcr.io/linuxserver/calibre-web:latest
 # Iestatiet laika zonu
 ENV TZ=Europe/Riga
 
-# Pārbaudiet un inicializējiet datubāzi, ja tā nav jau inicializēta
+# Pārbaudiet un inicializējiet datubāzi, ja tā neeksistē
 RUN python3 -c "\
 import sqlite3; \
 conn = sqlite3.connect('/config/app.db'); \
@@ -15,6 +15,5 @@ conn.close();"
 # Eksportējiet portu
 EXPOSE 8083
 
-# Pareizi palaidiet Calibre-Web
+# Palaidiet Calibre-Web
 CMD ["/init"]
-
