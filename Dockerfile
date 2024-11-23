@@ -3,13 +3,7 @@ FROM ghcr.io/linuxserver/calibre-web:latest
 # Iestatiet laika zonu
 ENV TZ=Europe/Riga
 
-# Nodrošiniet, ka iepriekšējā datubāze tiek izdzēsta (ja pastāv)
-RUN rm -f /config/app.db
-
-# Eksportējiet portu
-EXPOSE 8083
-
-# Izveidojiet datubāzi, ja tā neeksistē, un pievienojiet admin lietotāju
+# Pārbaudiet un inicializējiet datubāzi, ja tā nav jau inicializēta
 RUN python3 -c "\
 import sqlite3; \
 conn = sqlite3.connect('/config/app.db'); \
@@ -18,5 +12,9 @@ conn.execute('INSERT OR IGNORE INTO users (username, password) VALUES (\"admin\"
 conn.commit(); \
 conn.close();"
 
-# Palaidiet Calibre-Web
-CMD ["/usr/bin/run"]
+# Eksportējiet portu
+EXPOSE 8083
+
+# Pareizi palaidiet Calibre-Web
+CMD ["/init"]
+
