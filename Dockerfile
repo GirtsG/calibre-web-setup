@@ -3,11 +3,14 @@ FROM ghcr.io/linuxserver/calibre-web:latest
 # Iestatiet laika zonu
 ENV TZ=Europe/Riga
 
-# Pievienojiet iepriekš izveidotu datubāzes failu
+# Inicializējiet nepieciešamās mapes
+RUN mkdir -p /config /books
+
+# Nodrošiniet, ka datubāze ir pievienota
 COPY config/app.db /config/app.db
 
-# Eksportējiet portu
-EXPOSE 8083
+# Parādiet failu sarakstu konfigurācijas mapē diagnostikai
+RUN ls -al /config
 
-# Palaidiet ar pareizo ieejas punktu
-CMD ["/init"]
+# Iestatiet starta punktu manuāli
+CMD ["python3", "/app/calibre-web/cps.py"]
